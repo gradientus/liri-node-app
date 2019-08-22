@@ -11,7 +11,11 @@ var info = process.argv[3];
 
 switch (action) {
   case "movie-this":
-    getMovie(info);
+    if (info == null) {
+      getMovie("Mr. Nobody");
+    } else {
+      getMovie(info);
+    }
     break;
 
   case "concert-this":
@@ -45,7 +49,8 @@ function getMovie(info) {
       Language: ${response.data.Language}\n
       Actors: ${response.data.Actors}\n
       ${response.data.Ratings[0].Source}: ${response.data.Ratings[0].Value}\n
-      ${response.data.Ratings[1].Source}: ${response.data.Ratings[1].Value}`
+      ${response.data.Ratings[1].Source}: ${response.data.Ratings[1].Value}\n
+      Plot: ${response.data.Plot}`
       );
     });
 }
