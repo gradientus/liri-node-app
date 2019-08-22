@@ -1,16 +1,16 @@
 require("dotenv").config();
 var keys = require("./keys.js");
 var axios = require("axios");
-//var moment = require("moment");
+var moment = require("moment");
 //var Spotify = require("node-spotify-api");
 
-var action = process.argv[2];
-var info = process.argv[3];
+var action = process.argv[2].toUpperCase();
+var info = process.argv[3].toUpperCase();
 
-// console.log(action, value, process.env.OMDB_ID);
+console.log(action, info);
 
 switch (action) {
-  case "movie-this":
+  case "MOVIE-THIS":
     if (info == null) {
       getMovie("Mr. Nobody");
     } else {
@@ -18,15 +18,15 @@ switch (action) {
     }
     break;
 
-  case "concert-this":
-    //getConcert(info);
+  case "CONCERT-THIS":
+    getConcert(info);
     break;
 
-  case "spotify-this-song":
+  case "SPOTIFY-THIS-SONG":
     //getSong(info);
     break;
 
-  case "do-what-it-says":
+  case "DO-WHAT-IT-SAYS":
     //getWhatever(info);
     break;
 }
@@ -35,10 +35,9 @@ switch (action) {
 function getMovie(info) {
   axios
     .get(
-      "https://www.omdbapi.com/?i=tt3896198&apikey=" +
-        process.env.OMDB_ID +
-        "&t=" +
-        info
+      `https://www.omdbapi.com/?i=tt3896198&apikey=${
+        process.env.OMDB_ID
+      }&t=${info}`
     )
     .then(function(response) {
       console.log(
@@ -54,7 +53,26 @@ function getMovie(info) {
       );
     });
 }
-//Bands In Town: https://app.swaggerhub.com/apis/Bandsintown/PublicAPI/3.0.0
 
-//What is this?
-// new Spotify(keys.spotify);
+function getConcert(info) {
+  axios
+    .get(
+      `https://rest.bandsintown.com/artists/${info}/events?app_id=${
+        process.env.BAND_ID
+      }`
+    )
+    .then(function(response) {
+      console.log(`\n----- CONCERT INFORMATION -----\n
+      Artist: ${info}\n
+      Venue: ${response.data[0].venue.name}\n
+      Location: ${
+        response.data[0].venue.city
+      }, ${response.data[0].venue.region}\n`);
+      console.log(
+        "      Performance Date: " +
+          moment(response.data[0].datetime).format("MM/DD/YYYY") +
+          " at " +
+          moment(response.data[0].datetime).format("hh:mma")
+      );
+    });
+}
