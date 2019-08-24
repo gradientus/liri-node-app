@@ -5,6 +5,7 @@ var axios = require("axios");
 var moment = require("moment");
 var Spotify = require("node-spotify-api");
 var fs = require("fs");
+var colors = require("colors");
 
 //
 // pull in user input
@@ -32,7 +33,7 @@ function doThis(action, info) {
       break;
 
     case "SPOTIFY-THIS-SONG":
-      //getSong(info);
+      getSong(info);
       break;
 
     case "DO-WHAT-IT-SAYS":
@@ -40,7 +41,7 @@ function doThis(action, info) {
       break;
 
     default:
-      console.log("Mistakes were made.");
+      console.log("Mistakes were made.  Try again.");
   }
 }
 
@@ -55,7 +56,7 @@ function getMovie(info) {
     )
     .then(function(response) {
       console.log(
-        `\n----- MOVIE INFORMATION -----\n
+        `\n\n      ----- MOVIE INFORMATION -----\n
       Movie: ${response.data.Title}\n
       Released: ${response.data.Year}\n
       Country: ${response.data.Country}\n
@@ -67,8 +68,12 @@ function getMovie(info) {
       ${response.data.Ratings[1].Source} Rating: ${
           response.data.Ratings[1].Value
         }\n
-      Plot: ${response.data.Plot}`
+      Plot: ${response.data.Plot}\n
+      -----------------------------\n`
       );
+    })
+    .catch(function(err) {
+      console.log(err);
     });
 }
 
@@ -82,7 +87,7 @@ function getConcert(info) {
       }`
     )
     .then(function(response) {
-      console.log(`\n----- CONCERT INFORMATION -----\n
+      console.log(`\n\n      ----- CONCERT INFORMATION -----\n
       Artist: ${info}\n  
       Venue: ${response.data[0].venue.name}\n
       Location: ${
@@ -94,43 +99,49 @@ function getConcert(info) {
           " at " +
           moment(response.data[0].datetime).format("hh:mma")
       );
+      console.log(`\n      -----------------------------\n`);
+    })
+    .catch(function(err) {
+      console.log(err);
     });
 }
 
 //
 //function for do-what-it-says
 function getWhatever() {
-  fs.readFile("random.txt", "utf8", function(err, data) {
-    if (err) {
-      return console.log(`Something went wrong: ${err}.`);
-    }
+  fs.readFile("random.txt", "utf8", function(data) {
     data = data.split(",");
-    action = data[0];
+    action = data[0].toUpperCase();
     info = data[1];
     doThis(action, info);
     console.log(data, action, info);
   });
-  //TODO: test concert-this
-  //TODO: test movie-this
-  //TODO: test spotify-this-song
-  //TODO: prevent this function from running do-what-it-says
 }
 
 //
 //function for spotify-this-song
-function getSong(info) {}
+function getSong(info) {
+  //console.log(action, info);
+  var spotify = new Spotify(keys.spotify);
+  spotify
+    .search({ type: "track", query: info })
+    .then(function(response) {
+      console.log(response.tracks.items[0]);
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+}
 
 //
 //run the function to decide what is needed
 doThis(action, info);
 
 //
+//
 //TODO: log everything to a log.txt file
-//TODO: format the output to be a little nicer for the log.txt
-//TODO: put in fail-safe mechanisms to prevent users from pluggin in garbage
-//TODO: put in a way to handle errors that come back to the promise
 //TODO: make getSong work
-//QUESTION: should I combine the axios part of both of these functions? and let the function be the console.log bit?
-//QUESTION: I look back to examples and assignments, I don't think I can do that in an interview.  What should I generally have memorized?
-//QUESTION: Why would I ever make an app like this?  The professor says it's to build a webserver, but I'm not sure I understood the explanation.
-//QUESTION:  Not entirely sure how I understand the Spotify and keys.js .  Why is Spotify a constructor?  Because of the key.js being an object that is being imported?  Why would I do that and not jut do what I did above with the .env IDs?
+//TODO: test spotify-this-song in getWhatever
+//TODO: prevent getWhatever function from running do-what-it-says
+//TODO: handle err on dowhatever
+//TODO: figure out what is wrong in dowhatever
