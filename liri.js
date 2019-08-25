@@ -14,7 +14,7 @@ var info = process.argv.slice(3).join(" ");
 
 //
 // decide which function will be run based on user input
-function doThis(action, info) {
+function liriDo(action, info) {
   switch (action) {
     case "MOVIE-THIS":
       if (!info) {
@@ -50,9 +50,7 @@ function doThis(action, info) {
 function getMovie(info) {
   axios
     .get(
-      `https://www.omdbapi.com/?i=tt3896198&apikey=${
-        process.env.OMDB_ID
-      }&t=${info}`
+      `https://www.omdbapi.com/?i=tt3896198&apikey=${process.env.OMDB_ID}&t=${info}`
     )
     .then(function(response) {
       console.log(
@@ -62,12 +60,8 @@ function getMovie(info) {
       Country: ${response.data.Country}\n
       Language: ${response.data.Language}\n
       Actors: ${response.data.Actors}\n
-      ${response.data.Ratings[0].Source} Rating: ${
-          response.data.Ratings[0].Value
-        }\n
-      ${response.data.Ratings[1].Source} Rating: ${
-          response.data.Ratings[1].Value
-        }\n
+      ${response.data.Ratings[0].Source} Rating: ${response.data.Ratings[0].Value}\n
+      ${response.data.Ratings[1].Source} Rating: ${response.data.Ratings[1].Value}\n
       Plot: ${response.data.Plot}\n
       -----------------------------\n`
       );
@@ -82,17 +76,13 @@ function getMovie(info) {
 function getConcert(info) {
   axios
     .get(
-      `https://rest.bandsintown.com/artists/${info}/events?app_id=${
-        process.env.BAND_ID
-      }`
+      `https://rest.bandsintown.com/artists/${info}/events?app_id=${process.env.BAND_ID}`
     )
     .then(function(response) {
       console.log(`\n\n      ----- CONCERT INFORMATION -----\n
       Artist: ${info}\n  
       Venue: ${response.data[0].venue.name}\n
-      Location: ${
-        response.data[0].venue.city
-      }, ${response.data[0].venue.region}\n`);
+      Location: ${response.data[0].venue.city}, ${response.data[0].venue.region}\n`);
       console.log(
         "      Performance Date: " +
           moment(response.data[0].datetime).format("MM/DD/YYYY") +
@@ -109,12 +99,13 @@ function getConcert(info) {
 //
 //function for do-what-it-says
 function getWhatever() {
-  fs.readFile("random.txt", "utf8", function(data) {
+  fs.readFile("random.txt", "utf8", function(err, data) {
     data = data.split(",");
     action = data[0].toUpperCase();
     info = data[1];
-    doThis(action, info);
-    console.log(data, action, info);
+    info = info.replace('"', "");
+    info = info.replace('"', "");
+    liriDo(action, info);
   });
 }
 
@@ -135,13 +126,10 @@ function getSong(info) {
 
 //
 //run the function to decide what is needed
-doThis(action, info);
+liriDo(action, info);
 
 //
 //
 //TODO: log everything to a log.txt file
 //TODO: make getSong work
 //TODO: test spotify-this-song in getWhatever
-//TODO: prevent getWhatever function from running do-what-it-says
-//TODO: handle err on dowhatever
-//TODO: figure out what is wrong in dowhatever

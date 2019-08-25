@@ -55,6 +55,10 @@ I use Git and GitHub to version the software
 
 - **Phil Mauracher** - [GitHub](https://github.com/gradientus) - [GitHub_Pages](https://gradientus.github.io)
 
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
 ## Code of Conduct
 
 ### My Pledge
@@ -111,11 +115,12 @@ further defined and clarified by project maintainers.
 
 ### Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
+Instances of abusive, harrassment, or otherwise unacceptable behavior may be
 reported by contacting the project team at Github.
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
+- my class, Ben, the TAs, my husband,
+- the authors of JS, NPM, Axios, Spotify, BandsInTown, OMDB
+- Calliope, the muse of poetry
+- kitties and puppies
