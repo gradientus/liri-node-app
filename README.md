@@ -18,6 +18,10 @@ BAND_ID=**your-api-key
 
 3.  You will need to run "npm i" in the directory to install all the dependencies.
 
+### Using the Software
+
+![Instructions](https://github.com/gradientus/liri-node-app/blob/master/liri.gif)
+
 ## Built With
 
 - [JS](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
