@@ -33,7 +33,11 @@ function liriDo(action, info) {
       break;
 
     case "SPOTIFY-THIS-SONG":
-      getSong(info);
+      if (!info) {
+        getSong("The Sign");
+      } else {
+        getSong(info);
+      }
       break;
 
     case "DO-WHAT-IT-SAYS":
@@ -41,7 +45,7 @@ function liriDo(action, info) {
       break;
 
     default:
-      console.log("Mistakes were made.  Try again.");
+      console.log("Mistakes were made.  Try again.".red);
   }
 }
 
@@ -63,7 +67,7 @@ function getMovie(info) {
       ${response.data.Ratings[0].Source} Rating: ${response.data.Ratings[0].Value}\n
       ${response.data.Ratings[1].Source} Rating: ${response.data.Ratings[1].Value}\n
       Plot: ${response.data.Plot}\n
-      -----------------------------\n`
+      -----------------------------\n`.green
       );
     })
     .catch(function(err) {
@@ -79,17 +83,20 @@ function getConcert(info) {
       `https://rest.bandsintown.com/artists/${info}/events?app_id=${process.env.BAND_ID}`
     )
     .then(function(response) {
-      console.log(`\n\n      ----- CONCERT INFORMATION -----\n
+      console.log(
+        `\n\n      ----- CONCERT INFORMATION -----\n
       Artist: ${info}\n  
       Venue: ${response.data[0].venue.name}\n
-      Location: ${response.data[0].venue.city}, ${response.data[0].venue.region}\n`);
-      console.log(
-        "      Performance Date: " +
-          moment(response.data[0].datetime).format("MM/DD/YYYY") +
-          " at " +
-          moment(response.data[0].datetime).format("hh:mma")
+      Location: ${response.data[0].venue.city}, ${response.data[0].venue.region}\n`
+          .magenta
       );
-      console.log(`\n      -----------------------------\n`);
+      console.log(
+        "      Performance Date: ".magenta +
+          moment(response.data[0].datetime).format("MM/DD/YYYY").magenta +
+          " at ".magenta +
+          moment(response.data[0].datetime).format("hh:mma").magenta
+      );
+      console.log(`\n      -----------------------------\n`.magenta);
     })
     .catch(function(err) {
       console.log(err);
@@ -117,7 +124,13 @@ function getSong(info) {
   spotify
     .search({ type: "track", query: info })
     .then(function(response) {
-      console.log(response.tracks.items[0]);
+      console.log(
+        `
+      Song: ${response.tracks.items[0].name}
+      Artist: ${response.tracks.items[0].artists[0].name}
+      Album: ${response.tracks.items[0].album.name}
+      Preview: ${response.tracks.items[0].preview_url}`.cyan
+      );
     })
     .catch(function(err) {
       console.log(err);
@@ -127,9 +140,3 @@ function getSong(info) {
 //
 //run the function to decide what is needed
 liriDo(action, info);
-
-//
-//
-//TODO: log everything to a log.txt file
-//TODO: make getSong work
-//TODO: test spotify-this-song in getWhatever

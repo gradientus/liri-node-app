@@ -2,54 +2,41 @@
 
 Liri bot is a command line application that will allow the user to find information about a movie, where a musical artist will perform next, and the details of a song.
 
-## Getting Started
-
-1. 2. 3.
-
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+Basic knowledge of Node JS, NPM, your own API keys to OMDB, BandsInTown, and Spotify.
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+1.  Clone the repository onto your computer.
+2.  Create a .env file. It will need to look like this:
 
-Say what the step will be
+SPOTIFY_ID=**your-spotify-id
+SPOTIFY_SECRET=**your-spotify-secret
+OMDB_ID=**your-api-key
+BAND_ID=**your-api-key
 
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+3.  You will need to run "npm i" in the directory to install all the dependencies.
 
 ## Built With
 
-- [Node](http://) -
-- [Axios](https://) -
-- [Dotenv](https://) -
-- [Moment](https://) -
-- [node-spotify-api](https://) -
-- [JS](http://) -
-- [Git Bash](http://) -
-- [GitHub](http://) -
+- [JS](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [Git for Windows](https://gitforwindows.org/)
+- [Node](https://nodejs.org/)
+- [NPM](https://www.npmjs.com/)
+- [Dotenv](https://www.npmjs.com/package/dotenv)
+- [Axios](https://www.npmjs.com/package/axios)
+- [node-spotify-api](https://www.npmjs.com/package/node-spotify-api)
+- [Moment](https://www.npmjs.com/package/moment)
+- [Colors](https://www.npmjs.com/package/colors)
 
 ## Contributing
 
-When contributing to this repository, please first discuss the change you wish to make via issue, email me to discuss any changes.
+When contributing to this repository, please first discuss the change you wish to make by creating an issue or email.
 
 ## Versioning
 
-I use Git and GitHub to version the software
+I use Git and GitHub to version the software.
 
 ## Authors
 
