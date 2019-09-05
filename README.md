@@ -16,7 +16,7 @@ SPOTIFY_SECRET=**your-spotify-secret
 OMDB_ID=**your-api-key
 BAND_ID=**your-api-key
 
-3.  You will need to run "npm i" in the directory to install all the dependencies.
+3.  You will need to run "npm init" in the directory to install all the dependencies.
 
 ### Using the Software
 
